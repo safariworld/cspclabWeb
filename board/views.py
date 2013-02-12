@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from board.models import WritingEntries, Categories, CommentsModel
 from django.template import Context, loader
@@ -35,29 +36,14 @@ def list ( request, page=1 ):
     return HttpResponse(tpl.render(ctx) )
 
 def read ( request, entry_id = None ):
-
     page_title = 'Read page'
-    try:
-        current_entry = WritingEntries.objects.get(id = int(entry_id))
-    except:
-        return HttpResponse('There is no such write.')
-    try:
-        prev_entry = current_entry.get_previous_by_updatedDate()
-    except:
-        prev_entry = None
+    current_entry = get_object_or_404(WritingEntries, id = entry_id)
 
-    try:
-        next_entry = current_entry.get_next_by_updatedDate()
-    except:
-        next_entry = None
-
-    cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('updatedDate')
+    cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('createdDate')
     tpl = loader.get_template('read.html')
     ctx = Context({
         'page_title':page_title,
         'current_entry':current_entry,
-        'prev_entry':prev_entry,
-        'next_entry':next_entry,
         'comments':cmts
         })
     

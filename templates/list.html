@@ -5,7 +5,7 @@
 
     {% for entry in entries %}
     <div class="entry">
-        <h3 class="post_title"> <a href = "/blog/entry/{{entry.id}}" >{{entry.title}}</a></h3>
+        <h3 class="post_title"> <a href = "/board/read/{{entry.id}}" >{{entry.title}}</a></h3>
             <p class="post_info">Category: {{entry.category.title}} / {{entry.createdDate}} </p>
                 <div class="post_context"> {{entry.content}} </div>
                 <ul class="post_meta">

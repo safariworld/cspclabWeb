@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
-    url(r'^$', include('home.urls')),
-    url(r'^board/$', include('board.urls')),
+    url(r'^', include('home.urls')),
+    url(r'^board/', include('board.urls')),
     url(r'^aboutus/$', include('plainPages.urls')),
 )

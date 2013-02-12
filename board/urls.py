@@ -4,5 +4,6 @@ import views
 
 urlpatterns = patterns(
     'board.views',
-    (r'^$', views.list),
+    url(r'^$', views.list),
+    url(r'^read/(?P<entry_id>[0-9]+)/$', views.read),
 )

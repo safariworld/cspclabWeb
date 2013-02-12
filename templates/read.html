@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h3> <a href = "/board/read/{{current_entry.id}}">{{current_entry.title}}</a></h3>
+    <ul>
+    <li> category: {{current_entry.category.title}} </li>
+    <li> {{current_entry.createdDate}} </li>
+    </ul>
+    <div> {{current_entry.content}} </div>
+</div>
+-------------------------<br>
+<div>
+    {% include 'comments.html' %}
+    {% include 'comment_form.html' %}
+</div>
+{% endblock %}
