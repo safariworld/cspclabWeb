@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from board.models import WritingEntries, Categories, CommentsModel
 from django.template import Context, loader
 import md5
+from forms import WriteForm
+from django.views.decorators.csrf import csrf_exempt
 
 #show list page specified by arguement PAGE.
 #template: list.html
@@ -13,12 +15,9 @@ def list ( request, page=1 ):
 
     page_title = 'List'
     per_page = 5
-
     page = int(page)
-
     start_pos = (page-1)*per_page
     end_pos = start_pos + per_page
-
     entries = WritingEntries.objects.all().order_by('-createdDate')[start_pos:end_pos]
     numberOfentries = WritingEntries.objects.count()
     numberOfpages = numberOfentries/per_page
@@ -38,7 +37,6 @@ def list ( request, page=1 ):
 def read ( request, entry_id = None ):
     page_title = 'Read page'
     current_entry = get_object_or_404(WritingEntries, id = entry_id)
-
     cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('createdDate')
     tpl = loader.get_template('read.html')
     ctx = Context({
@@ -49,16 +47,21 @@ def read ( request, entry_id = None ):
     
     return HttpResponse(tpl.render(ctx))
 
-def write_form( request ):
+@csrf_exempt
+def write( request ):
     page_title = 'Write page'
-
     categories = Categories.objects.all()
-
     tpl = loader.get_template('write.html')
     ctx = Context({
         'page_title':page_title,
         'categories':categories
         })
+    form = WriteForm(data = request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        post = form.save(commit=False)
+        post.save()
+        tpl = loader.get_template('main.html')
+        return HttpResponse( tpl.render(ctx) )
 
     return HttpResponse( tpl.render(ctx) )
 

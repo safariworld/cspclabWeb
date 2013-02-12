@@ -6,4 +6,5 @@ urlpatterns = patterns(
     'board.views',
     url(r'^$', views.list),
     url(r'^read/(?P<entry_id>[0-9]+)/$', views.read),
+    url(r'^write/$', views.write),
 )
