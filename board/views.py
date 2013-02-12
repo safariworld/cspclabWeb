@@ -18,7 +18,7 @@ def indexView ( request, page=1 ):
     start_pos = (page-1)*per_page
     end_pos = start_pos + per_page
 
-    entries = WritingEntries.objects.all().order_by('-updatedDate')[start_pos:end_pos]
+    entries = WritingEntries.objects.all().order_by('-createdDate')[start_pos:end_pos]
     numberOfentries = WritingEntries.objects.count()
     numberOfpages = numberOfentries/per_page
     if not numberOfentries%per_page == 0:
