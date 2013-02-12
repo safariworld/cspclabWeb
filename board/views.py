@@ -8,7 +8,7 @@ import md5
 #show list page specified by arguement PAGE.
 #template: list.html
 
-def indexView ( request, page=1 ):
+def list ( request, page=1 ):
 
     page_title = 'List'
     per_page = 5

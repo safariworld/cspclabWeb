@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1><strong>{{page_title}}</strong></h1>
+
+    {% for entry in entries %}
+    <div class="entry">
+        <h3 class="post_title"> <a href = "/blog/entry/{{entry.id}}" >{{entry.title}}</a></h3>
+            <p class="post_info">Category: {{entry.category.title}} / {{entry.createdDate}} </p>
+                <div class="post_context"> {{entry.content}} </div>
+                <ul class="post_meta">
+                    <li> Tags: {% for tag in entry.tags.all %}
+                    <span>{{tag.title}}</span>
+                    {% endfor %}</li>
+                    <li> Comments ( {{entry.comments}} )</li>
+
+                </ul>
+    </div>
+    {% endfor %}
+
+    {% for each_page in num_pages %}
+    <div>
+        <p> <a href = "/blog/page/{{each_page}}/"> {{each_page}}</a> </p>
+    </div>
+    {% endfor %}
+{% endblock %}
