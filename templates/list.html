@@ -1,26 +1,33 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block content %}
-    <h1><strong>{{page_title}}</strong></h1>
-
-    {% for entry in entries %}
-    <div class="entry">
-        <h3 class="post_title"> <a href = "/board/read/{{entry.id}}" >{{entry.title}}</a></h3>
-            <p class="post_info">Category: {{entry.category.title}} / {{entry.createdDate}} </p>
-                <div class="post_context"> {{entry.content}} </div>
-                <ul class="post_meta">
-                    <li> Tags: {% for tag in entry.tags.all %}
-                    <span>{{tag.title}}</span>
-                    {% endfor %}</li>
-                    <li> Comments ( {{entry.comments}} )</li>
-
-                </ul>
-    </div>
-    {% endfor %}
-
-    {% for each_page in num_pages %}
-    <div>
-        <p> <a href = "/blog/page/{{each_page}}/"> {{each_page}}</a> </p>
-    </div>
-    {% endfor %}
+<table class="table  table-striped">
+    <colgroup><col class="boardcol_title"><col class="boardcol_name"><col class="boardcol_date"></colgroup>
+    <thead class="board_thead">
+        <tr>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td><a href = "/blog/entry/{{entry.id}}" >{{entry.title}}</a></td>
+            <td>작성자 추후 추가</td>
+            <td> {{entry.updatedDate}} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination pagination-small">
+    <ul>
+        <li><a href="#">Prev</a></li>
+        {% for each_page in num_pages %}
+        <li><a href="#"></a>{{each_page}}</li>
+        {% endfor %}
+        <li><a href="#">Next</a></li>
+    </ul>
+</div>
 {% endblock %}
+
