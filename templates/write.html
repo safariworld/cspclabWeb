@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>{{page_title}}</h1>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {% for field in form %}
+    <dl>
+        <dt>
+        <label>
+            {{ field.label_tag }}
+        </label>
+        <dd>
+        {{ field }}
+        {% for error in field.errors %}
+          {{ error }}
+        {% endfor %}
+        </dd>
 
-<form action="" method="post">{% csrf_token %}
-
-    <label for="title"> Title </label>
-    <input type = "text" id = "title" name = "title" value = "" />
-
-    <label for="category"> Category </label>
-    <select name="category" id="category">
-        {% for category in categories %}</p>
-        <option value="{{category.id}}">{{category.title}}</option>
-        <p>{% endfor %}
-    </select>
-
-    <textarea id = "content" name = "content"></textarea>
+    </dl>
+    {% endfor %}
     <input type = "submit" value = "써넣기" />
 </form>
 {% endblock %}

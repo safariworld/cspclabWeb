@@ -5,4 +5,4 @@ from models import WritingEntries
 class WriteForm(forms.ModelForm):
     class Meta:
         model = WritingEntries
-        fields = ('category', 'title', 'content')
+        fields = ('category', 'title', 'content', 'attachedFile')
