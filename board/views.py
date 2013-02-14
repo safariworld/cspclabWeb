@@ -7,6 +7,9 @@ from django.template import Context, loader
 import md5
 from forms import WriteForm
 from django.views.decorators.csrf import csrf_exempt
+import settings
+import os
+from django.core.servers.basehttp import FileWrapper
 
 #show list page specified by arguement PAGE.
 #template: list.html
@@ -76,6 +79,14 @@ def write( request ):
             })
         return HttpResponse( tpl.render(ctx) )
 
+def download_file(request, filename ):
+    filepath = settings.DOWNLOAD_DIR + filename
+    wrapper = FileWrapper( file(filepath) )
+    response = HttpResponse( wrapper, mimetype='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename=' + filename.encode('utf-8')
+    response['Content-Length'] = os.path.getsize(filepath)
+
+    return response
 
 #add comments according to some writing.
 #name, password, content, entry_id
@@ -128,3 +139,4 @@ def delete_comment(request):
             return HttpResponse('Wrong password')
     except:
         return HttpResponse('Error!!')
+

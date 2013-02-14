@@ -157,3 +157,7 @@ LOGGING = {
         },
     }
 }
+
+
+
+DOWNLOAD_DIR = "media/attachments/"
