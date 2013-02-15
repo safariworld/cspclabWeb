@@ -14,6 +14,22 @@
 -------------------------<br>
 <div>
     {% include 'comments.html' %}
-    {% include 'comment_form.html' %}
+    <form action="" method="post">{% csrf_token %}
+    {% for field in form %}
+    <dl>
+        <dt>
+        <label>
+            {{ field.label_tag }}
+        </label>
+        <dd>
+        {{ field }}
+        {% for error in field.errors %}
+         {{ error }}
+        {% endfor %}
+        </dd>
+    </dl>
+    {% endfor %}
+    <input type="submit" value="add comment"/>
+    </form>
 </div>
 {% endblock %}

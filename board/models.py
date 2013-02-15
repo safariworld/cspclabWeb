@@ -22,8 +22,6 @@ class WritingEntries( models.Model ):
 
 
 class CommentsModel( models.Model ):
-    name = models.CharField(max_length = 20, null = False)
-    password = models.CharField(max_length = 32, null = False)
     content = models.TextField(max_length = 2000, null = False)
     createdDate = models.DateTimeField(auto_now = True)
     writingEntry = models.ForeignKey( WritingEntries )
