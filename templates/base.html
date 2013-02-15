@@ -26,7 +26,7 @@
             min-height: 100%;
             height: auto !important;
             height: 100%; /* Negative indent footer by it's height */
-            margin: 30px auto -60px;
+            margin: 0px auto -60px;
    
         }
         
@@ -34,6 +34,7 @@
         #header, #footer
         {
             height: 100px;
+            margin-top:50px;/* change hole page top */
         }
         
         #header 
@@ -129,32 +130,16 @@
         {
             border: 0px;
         }
-        
-        .welcome 
-        {
-            margin-top:5px;
-            text-align: center;
-            font-family: Garamond, serif;
-            font-size:30pt;
-            font-weight:bold;
-        }
-        
-        .logo 
-        {
-            float:left;
-             background-image:url('/media/img/logo.png');
-             margin-top:30px;
-             width:263px;
-             height:386px;
-        
-        }
-        
-        .mainContent 
-        {
-            margin-top:30px;
-            float:left;
 
-        }
+        /*
+        main.html css
+        */
+        {% block pagecss %}
+        
+
+
+
+        {% endblock %}
     </style>
     <link href="/media/css/bootstrap-responsive.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

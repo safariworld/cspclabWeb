@@ -1,5 +1,36 @@
 {% extends "base.html" %}
 
+{% block pagecss %}
+
+        
+        .welcome 
+        {
+            margin-top:5px;
+            text-align: center;
+            font-family: Garamond, serif;
+            font-size:30pt;
+            font-weight:bold;
+        }
+        
+        .logo 
+        {
+            float:left;
+             background-image:url('/media/img/logo.png');
+             margin-top:30px;
+             width:263px;
+             height:386px;
+        
+        }
+        
+        .mainContent 
+        {
+            margin-top:30px;
+            /*float:left;*/
+
+        }
+
+{% endblock %}
+
 
 {% block content %}
  <div class="welcome">
@@ -13,7 +44,7 @@
      </br>
      </br>
      CSPCLAB은</br>
-     C omputer  S cience  P ersonal  C omputer's  LAB oratory의 약자로써,</br>
+     C omputer  S cience  P ersonal  C omputer's  LAB oratory 의 약자로써,</br>
      1995년 서강대학교 컴퓨터공학과 랩실(현 리찌과학관 914호)</br>
      관리를 목적으로 창설된  학회입니다.</br>
      </br>
