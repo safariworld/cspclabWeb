@@ -1,6 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}main{% endblock %}
+{% block pagecss %}
+
+        
+        .welcome 
+        {
+            margin-top:5px;
+            text-align: center;
+            font-family: Garamond, serif;
+            font-size:30pt;
+            font-weight:bold;
+        }
+        
+        .logo 
+        {
+            float:left;
+             background-image:url('/media/img/logo.png');
+             margin-top:30px;
+             width:263px;
+             height:386px;
+        
+        }
+        
+        .mainContent 
+        {
+            margin-top:30px;
+            /*float:left;*/
+
+        }
+
+{% endblock %}
+
 
 {% block content %}
  <div class="welcome">
@@ -11,8 +41,20 @@
 
  </div>
  <div class="mainContent">
- ... main. ... ..... .....
-
+     </br>
+     </br>
+     CSPCLAB은</br>
+     C omputer  S cience  P ersonal  C omputer's  LAB oratory 의 약자로써,</br>
+     1995년 서강대학교 컴퓨터공학과 랩실(현 리찌과학관 914호)</br>
+     관리를 목적으로 창설된  학회입니다.</br>
+     </br>
+     </br>
+     랩실 관리자 모임으로 시작한 CSPCLAB은</br>
+     현재 컴퓨터공학과 4대 랩실 중 하나인 R914의 관리를 맡고 있으며,</br>
+     컴퓨터 공학 분야와 관련된 세미나와,</br>
+     다양한 프로그래밍 언어를 이용한 소프트웨어 개발 프로젝트를 진행,</br>
+     각종 프로그래밍 경진대회와 공모전에 참가하는 등</br>
+     다양한 방면에서 활발한 활동을 하고 있습니다.</br>
  </div>
 
 {% endblock %}
