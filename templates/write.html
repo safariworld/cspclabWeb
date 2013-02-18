@@ -1,22 +1,84 @@
 {% extends "base.html" %}
-{% block content %}
-<h1>{{page_title}}</h1>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    {% for field in form %}
-    <dl>
-        <dt>
-        <label>
-            {{ field.label_tag }}
-        </label>
-        <dd>
-        {{ field }}
-        {% for error in field.errors %}
-          {{ error }}
-        {% endfor %}
-        </dd>
+{% block pagecss %}
 
-    </dl>
-    {% endfor %}
+.span7 label {
+    font-size:20px;
+}
+
+.category  {
+    float:left;
+    margin-right:20px;
+}
+
+
+.category label {
+    float:left;
+    margin-right:20px;        
+}
+.category select {
+    float:left;
+    width:100px;
+}
+
+.title {
+margin-top:0px;
+height:30px;
+}
+
+
+.title label {
+float:left;
+text-align:justify;
+width:30px;
+padding-top:5px;
+    margin-right:50px;
+}
+
+.title input {
+    float:left;
+    width:600px;
+    
+}
+
+.writeContent {
+    margin-top:20px;
+    clear:both;
+}
+
+.writeContent {
+
+}
+
+
+{% endblock %}
+{% block content %}
+<!--<h4></h4>-->
+<script src="/media/ckeditor/ckeditor.js"></script>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+     
+   <!--  
+     <div class="category">
+        {{form.category.label_tag}}
+        {{form.category}}
+    </div>
+    -->
+     <div class="title">
+         <label>TITLE</label> 
+        {{form.title}}
+    </div>
+
+    <div class="writeContent">
+ 
+         {{form.content}}
+ </div>
+     <span>
+        {{form.attachedFile.label_tag}}
+     </span>  
+     <div>
+         {{form.attachedFile}}
+     </div>
+
+
     <input type = "submit" value = "써넣기" />
 </form>
 {% endblock %}
