@@ -17,15 +17,15 @@ def itemListView( request, page=1 ):
     start_pos = (page-1)*per_page
     end_pos = start_pos+per_page
 
-    item_entries = itemList.objects.raw( '''SELECT a.itemCode, 
+    item_entries = itemList.objects.raw( '''SELECT a.id, a.category, 
                                                    a.itemName, 
                                                    a.available, 
                                                    b.borrowedDate 
                                             FROM itemPage_itemlist AS a 
                                             LEFT OUTER JOIN itemPage_borrowedlist AS b 
-                                            ON a.itemCode=b.itemCode_id 
+                                            ON a.id=b.itemCode_id 
                                             AND returnDate is null
-                                            ORDER BY a.itemCode''')[start_pos:end_pos]
+                                            ORDER BY a.id''')[start_pos:end_pos]
     item_count = itemList.objects.count()
     page_count = ( item_count/per_page ) + (( item_count % per_page )!=0)
     tpl = loader.get_template( 'itemPage/itemList.html' )
