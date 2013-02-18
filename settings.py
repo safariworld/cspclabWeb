@@ -124,6 +124,8 @@ INSTALLED_APPS = (
 
     'cspclabWeb.plainPages',
     'cspclabWeb.board',
+#added by shpark
+    'cspclabWeb.itemPage',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
