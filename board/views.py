@@ -5,8 +5,11 @@ from django.http import HttpResponse
 from board.models import WritingEntries, Categories, CommentsModel
 from django.template import Context, loader
 import md5
-from forms import WriteForm
+from forms import WriteForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
+import settings
+import os
+from django.core.servers.basehttp import FileWrapper
 
 #show list page specified by arguement PAGE.
 #template: list.html
@@ -39,10 +42,12 @@ def read ( request, entry_id = None ):
     current_entry = get_object_or_404(WritingEntries, id = entry_id)
     cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('createdDate')
     tpl = loader.get_template('read.html')
+    form = CommentForm()
     ctx = Context({
         'page_title':page_title,
         'current_entry':current_entry,
-        'comments':cmts
+        'comments':cmts,
+        'form':form
         })
     
     return HttpResponse(tpl.render(ctx))
@@ -60,7 +65,6 @@ def write( request ):
     tpl = loader.get_template('write.html')
     if request.method == "POST":
         form = WriteForm(request.POST, request.FILES)
-#        return HttpResponse("<html><body>%s, %s</body></html>" %(form.is_valid(), request.FILES['attachedFile']))
         if form.is_valid():
             handle_uploaded_file(request.FILES['attachedFile'])
             post = form.save(commit=False)
@@ -76,6 +80,14 @@ def write( request ):
             })
         return HttpResponse( tpl.render(ctx) )
 
+def download_file(request, filename ):
+    filepath = settings.DOWNLOAD_DIR + filename
+    wrapper = FileWrapper( file(filepath) )
+    response = HttpResponse( wrapper, mimetype='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename=' + filename.encode('utf-8')
+    response['Content-Length'] = os.path.getsize(filepath)
+
+    return response
 
 #add comments according to some writing.
 #name, password, content, entry_id
@@ -128,3 +140,4 @@ def delete_comment(request):
             return HttpResponse('Wrong password')
     except:
         return HttpResponse('Error!!')
+
