@@ -25,6 +25,6 @@ urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
     url(r'^', include('home.urls')),
     url(r'^board/', include('board.urls')),
-    url(r'^aboutus/$', include('plainPages.urls')),
+    url(r'^plain/', include('plainPages.urls')),
     url(r'^accounts/signin/$', 'django.contrib.auth.views.login'),
 )
