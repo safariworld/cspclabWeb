@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     url(r'^board/', include('board.urls')),
     url(r'^aboutus/$', include('plainPages.urls')),
     url(r'^accounts/signin/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/signup/$', include('plainPages.urls')),
 )
