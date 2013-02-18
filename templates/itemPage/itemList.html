@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} itemList {% endblock %}
+
+{% block content %}
+ <div class="mainContent">
+  {% if item_entries %}
+  <table>
+   <tr>
+    <td align='center' width='80px'>itemCode</td>
+    <td align='center' width='400px'>itemName</td>
+    <td align='center'>status</td>
+    <td align='center'>빌려간날짜</td>
+   </tr>
+   {% for item in item_entries %}
+    <tr>
+     <td>{{ item.itemCode }}</td>
+     <td>{{ item.itemName }}</td>
+     <td>{% if item.available %} <font color="#00FF00">대여가능</font>
+         {% else %} <font color="#FF0000">대여중</font>
+         {% endif %}
+     </td>
+     <td align='center'>{% if item.borrowedDate %} {{ item.borrowedDate|date:"Y-m-d" }}
+                        {% else %} -
+                        {% endif %}
+     </td>
+    </tr>
+   {% endfor %}
+  </table>
+  <center>
+   {% if current_page != 1 %}
+    <a href=http://163.239.201.218:8013/itemList/page/{{ prev_page }}>&lt;</a>
+   {% endif %}
+
+   {% for i in page_count %}
+    {% if i == current_page %}
+     {{ i }}&nbsp;
+    {% else %}
+     <a href=http://163.239.201.218:8013/itemList/page/{{ i }}>{{ i }}</a>&nbsp; 
+    {% endif %}
+   {% endfor %}
+
+   {% if current_page != end_page %}
+    <a href=http://163.239.201.218:8013/itemList/page/{{ next_page }}>&gt;</a>
+   {% endif %}
+
+  </center>
+  <p>
+  </p>
+   {% else %}
+    <p>No data</p>
+   {% endif %}
+</div>
+{% endblock %}
