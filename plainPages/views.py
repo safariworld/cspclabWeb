@@ -16,3 +16,9 @@ def achievements(request):
     var = Context({
     })
     return HttpResponse( template.render(var) )
+
+def calendar(request):
+    template = get_template('calendar.html')
+    var = Context({
+        })
+    return HttpResponse( template.render(var) )

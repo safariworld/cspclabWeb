@@ -6,5 +6,6 @@ urlpatterns = patterns(
     'plainPages.views',
     (r'aboutus$', views.aboutUs),
     (r'achievements$', views.achievements),
+    (r'calendar$', views.calendar),
 )
 
