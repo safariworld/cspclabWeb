@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from django.template import Context, loader
 
-def homeView(request):
+def main(request):
     pageTitle = "This is CSPCLAB's Home :)"
     menuDictionary = { 
             "Home":"home",

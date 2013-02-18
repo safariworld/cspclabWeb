@@ -1,7 +1,6 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls.defaults import patterns, include, url
-from home.views import *
-from board.views import *
-from plainPages.views import *
 import os
 
 ROOT_PATH = os.path.dirname(__file__)
@@ -21,14 +20,14 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
-    url(r'^$', homeView),
-    url(r'^board/$', indexView),
-    url(r'^aboutus/$', aboutUsView),
 # modified by shpark
     url(r'^itemList/$', 'itemPage.views.itemListView'),
     url(r'^itemList/page/(?P<page>\d+)/$', 'itemPage.views.itemListView'),
+    url(r'^', include('home.urls')),
+    url(r'^board/', include('board.urls')),
+    url(r'^aboutus/$', include('plainPages.urls')),
+    url(r'^accounts/signin/$', 'django.contrib.auth.views.login'),
 )
