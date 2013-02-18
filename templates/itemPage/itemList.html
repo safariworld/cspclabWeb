@@ -7,14 +7,14 @@
   {% if item_entries %}
   <table>
    <tr>
-    <td align='center' width='80px'>itemCode</td>
+    <td align='center' width='70px'>종류</td>
     <td align='center' width='400px'>itemName</td>
     <td align='center'>status</td>
     <td align='center'>빌려간날짜</td>
    </tr>
    {% for item in item_entries %}
     <tr>
-     <td>{{ item.itemCode }}</td>
+     <td align='center'>{{ item.category }}</td>
      <td>{{ item.itemName }}</td>
      <td>{% if item.available %} <font color="#00FF00">대여가능</font>
          {% else %} <font color="#FF0000">대여중</font>
