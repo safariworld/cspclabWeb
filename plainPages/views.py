@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template import Context
-from cspclabWeb.forms import *
+#from cspclabWeb.forms import *
 
 def aboutUs(request):
     template = get_template('aboutUs.html')	
@@ -11,7 +11,7 @@ def aboutUs(request):
         'head_title': 'About Us',
     })
     return HttpResponse( template.render(var) )
-
+"""
 def register(request):
     if request.method == 'post':
         form = RegistrationForm(request.POST)
@@ -33,6 +33,7 @@ def register(request):
                 'registration/signup.html',
                 variables
         )
+"""
 def achievements(request):
     template = get_template('achievements.html')
     var = Context({
