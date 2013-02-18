@@ -13,5 +13,7 @@ urlpatterns = patterns(
     (r'aboutus$', views.aboutUs),
     (r'achievements$', views.achievements),
     (r'calendar$', views.calendar),
+    (r'logout$', views.logout_page),
+    (r'profile$', views.profile),
 )
 

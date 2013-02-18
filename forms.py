@@ -8,7 +8,6 @@ class RegistrationForm(forms.Form):
     password1 = forms.CharField(label='password', widget=forms.PasswordInput())
     password2 = forms.CharField(label='password(again)', widget=forms.PasswordInput())
     email = forms.EmailField(label='email')
-    mobile = forms.IntegerField(label='mobile' help_text=' Write without '-' ')
 
     def clean_password2(self):
         if 'password1' in self.cleaned_data:
