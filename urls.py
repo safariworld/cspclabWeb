@@ -24,8 +24,11 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
-    (r'^$', homeView),
-    (r'^board/$', indexView),
-    (r'^aboutus/$', aboutUsView),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
+    url(r'^$', homeView),
+    url(r'^board/$', indexView),
+    url(r'^aboutus/$', aboutUsView),
+# modified by shpark
+    url(r'^itemList/$', 'itemPage.views.itemListView'),
+    url(r'^itemList/page/(?P<page>\d+)/$', 'itemPage.views.itemListView'),
 )
