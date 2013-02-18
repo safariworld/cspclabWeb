@@ -5,9 +5,11 @@ import views
 
 urlpatterns = patterns(
     'plainPages.views',
-    (r'^$', views.aboutUs),
-    (r'^/account/signup/$', views.register),
-    (r'^/account/register_success/$', direct_to_template,
+    (r'plain/account/signup/$', views.register),
+    (r'plain/account/register_success/$', direct_to_template,
        { 'template' : 'registration/register_success.html' }),
+    (r'aboutus$', views.aboutUs),
+    (r'achievements$', views.achievements),
+    (r'calendar$', views.calendar),
 )
 

@@ -22,7 +22,7 @@ def register(request):
                     email=form.cleaned_data['email']
                     mobile=form.cleaned_data['mobile']
                     )
-            return HttpResponseRedirect('/account/register_success/'))
+            return HttpResponseRedirect('plain/account/register_success/'))
         else:
             form = RegistrationForm()
 
@@ -33,3 +33,14 @@ def register(request):
                 'registration/signup.html',
                 variables
         )
+def achievements(request):
+    template = get_template('achievements.html')
+    var = Context({
+    })
+    return HttpResponse( template.render(var) )
+
+def calendar(request):
+    template = get_template('calendar.html')
+    var = Context({
+        })
+    return HttpResponse( template.render(var) )

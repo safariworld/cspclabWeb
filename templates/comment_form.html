@@ -1,12 +1,8 @@
-<form method="post" action ="/blog/add/comment/">
+<form method="post" action ="/board/write_comment/">
 <input type="hidden" name="entry_id" value="{{current_entry.id}}" />
 
-<label for="name">Writer</label>
+<label for="name">writer</label>
 <input type="text" id="name" name="name" value="" />
-
-<label for="password">Password</label>
-<input type="password" id="password" name="password" value="" />
-</br>
 <textarea id="content" name="content"></textarea>
 <input type="submit" value="Add comment" />
 </form>

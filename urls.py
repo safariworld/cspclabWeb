@@ -23,9 +23,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':ROOT_PATH+'/media/'}),
+    url(r'^itemList/', include('itemPage.urls')),
     url(r'^', include('home.urls')),
     url(r'^board/', include('board.urls')),
-    url(r'^aboutus/$', include('plainPages.urls')),
+    url(r'^plain/', include('plainPages.urls')),
     url(r'^accounts/signin/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/signup/$', include('plainPages.urls')),
 )

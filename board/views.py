@@ -5,8 +5,11 @@ from django.http import HttpResponse
 from board.models import WritingEntries, Categories, CommentsModel
 from django.template import Context, loader
 import md5
-from forms import WriteForm
+from forms import WriteForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
+import settings
+import os
+from django.core.servers.basehttp import FileWrapper
 
 #show list page specified by arguement PAGE.
 #template: list.html
@@ -39,59 +42,52 @@ def read ( request, entry_id = None ):
     current_entry = get_object_or_404(WritingEntries, id = entry_id)
     cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('createdDate')
     tpl = loader.get_template('read.html')
+    form = CommentForm()
     ctx = Context({
         'page_title':page_title,
         'current_entry':current_entry,
-        'comments':cmts
+        'comments':cmts,
+        'form':form
         })
     
     return HttpResponse(tpl.render(ctx))
+
+def handle_uploaded_file(f):
+    destination = open('attachments/name.txt', 'wb+')
+    for chunk in f.chunks():
+        destination.write( chunk )
+    destination.close()
 
 @csrf_exempt
 def write( request ):
     page_title = 'Write page'
     categories = Categories.objects.all()
     tpl = loader.get_template('write.html')
-    ctx = Context({
-        'page_title':page_title,
-        'categories':categories
-        })
-    form = WriteForm(data = request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        post = form.save(commit=False)
-        post.save()
-        tpl = loader.get_template('main.html')
+    if request.method == "POST":
+        form = WriteForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['attachedFile'])
+            post = form.save(commit=False)
+            post.save()
+            tpl = loader.get_template('main.html')
+            return HttpResponse( tpl )
+    else:
+        form = WriteForm()
+        ctx = Context({
+            'page_title':page_title,
+            'categories':categories,
+            'form':form
+            })
         return HttpResponse( tpl.render(ctx) )
 
-    return HttpResponse( tpl.render(ctx) )
+def download_file(request, filename ):
+    filepath = settings.DOWNLOAD_DIR + filename
+    wrapper = FileWrapper( file(filepath) )
+    response = HttpResponse( wrapper, mimetype='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename=' + filename.encode('utf-8')
+    response['Content-Length'] = os.path.getsize(filepath)
 
-def add_post( request ):
-    if request.POST.has_key('title') == False:  
-        return HttpResponse('Please write content')
-    else:
-        if len(request.POST['title']) == 0:
-            return HttpResponse("The length of title is at least 1.")
-        else:
-            if request.POST.has_key('content') == False:
-                return HttpResponse('Write content.')
-            else:
-                entry_content = request.POST['content']
-                try:
-                    entry_category = Categories.objects.get(id = request.POST['category'])
-                except:
-                    return HttpResponse('Weird Category')
-
-                entry_title = request.POST['title']
-                new_entry = WritingEntries( title = entry_title, content = entry_content, category = entry_category)
-
-                # save
-                try:
-                    new_entry.save()
-                except:
-                    return HttpResponse('Error at 1 storing')
-                
-                return HttpResponse('%s write has been stored successfully.' % new_entry.id)
-
+    return response
 
 #add comments according to some writing.
 #name, password, content, entry_id
@@ -144,6 +140,4 @@ def delete_comment(request):
             return HttpResponse('Wrong password')
     except:
         return HttpResponse('Error!!')
-    
-    
-    
+
