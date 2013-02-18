@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from board.models import WritingEntries, Categories, CommentsModel
 from django.template import Context, loader
 import md5
-from forms import WriteForm
+from forms import WriteForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
 import settings
 import os
@@ -42,10 +42,12 @@ def read ( request, entry_id = None ):
     current_entry = get_object_or_404(WritingEntries, id = entry_id)
     cmts = CommentsModel.objects.filter(writingEntry=current_entry).order_by('createdDate')
     tpl = loader.get_template('read.html')
+    form = CommentForm()
     ctx = Context({
         'page_title':page_title,
         'current_entry':current_entry,
-        'comments':cmts
+        'comments':cmts,
+        'form':form
         })
     
     return HttpResponse(tpl.render(ctx))
@@ -63,7 +65,6 @@ def write( request ):
     tpl = loader.get_template('write.html')
     if request.method == "POST":
         form = WriteForm(request.POST, request.FILES)
-#        return HttpResponse("<html><body>%s, %s</body></html>" %(form.is_valid(), request.FILES['attachedFile']))
         if form.is_valid():
             handle_uploaded_file(request.FILES['attachedFile'])
             post = form.save(commit=False)

@@ -1,17 +1,7 @@
 {% if comments|length %}
 <ul>
 {% for comment in comments %}
-    <li>{{comment.name}} wrote comment to {{comment.updatedDate}}
-    
-    <form method="post" action="/blog/delete/comment/">
-    
-        <label for="password">Password</label>
-        <input type="password" id = "password" name="password" value="" />
-        <input type="hidden" id="cmt_entry" name="cmt_entry" vlaue="{{comment.id}}" />
-        <input type="hidden" id="wrt_entry" name="wrt_entry" value="{{current_entry.id}}" />
-        <input type="submit" value="Delete comment" />
-    </form>
-    
+    <li>{{comment.name}}
     <p>{{comment.content}}</p></li>
 {% endfor %}
 </ul>
