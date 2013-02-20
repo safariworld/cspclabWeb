@@ -9,9 +9,11 @@ urlpatterns = patterns(
     (r'accounts/signin/$', login),
     (r'accounts/signup/$', views.register),
     (r'accounts/register_success/$', direct_to_template,
-       { 'template' : 'registration/register_success.html' }),
+       { 'template' : 'registration/signup_success.html' }),
     (r'aboutus$', views.aboutUs),
     (r'achievements$', views.achievements),
     (r'calendar$', views.calendar),
+    (r'logout$', views.logout_page),
+    (r'profile$', views.profile),
 )
 
