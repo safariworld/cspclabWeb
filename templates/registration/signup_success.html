@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+<!--
 <p> 가입이 완료되었습니다. <p>
     <a href="plain/accounts/signin">sign in</a>
     <a href="/">main</a>
+
+    -->
+    <script type="text/javascript">
+        setTimeout(function() {
+        alert("가입이 완료되었습니다.");
+      //  alert(split(window.location,"/accounts/"));
+        window.location.href=window.location.href.split("/accounts/")[0] + "/accounts/signin/";
+        },100);
+    </script>
+
 {% endblock %}
