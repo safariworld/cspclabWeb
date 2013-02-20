@@ -1,21 +1,54 @@
 {% extends "base.html" %}
+
+
+
+{% block pagecss %}
+
+
+.signpage  {
+    display:table-cell;
+    vertical-align:middle;
+    height:500px;
+}
+
+.signpage form{
+}
+
+
+{% endblock %}
+
+
 {% block content %}
 <html>
     <body>
-    <form method="post" action=".">
-        <p><label for="id_username">id :</label>
-        {{ form.username }}</p>
-        <p><label for="id_password">password :</label>
-        {{ form.password }}</p>
-        <button type="submit">sign in</button>
-        <input type="hidden" name="next" value="/" /> 
+    <div class="signpage">    
+    <form method="post" action="." class="form-horizontal">
+    <div class="control-group">    
+        <label for="id_username" class="control-label">ID :</label>
+        <div class="controls">
+            {{ form.username }}
+        </div>
+    </div>
+    <div class="control-group">    
+        <label for="id_password" class="control-label">PASSWORD :</label>
+        <div class="controls">
+            {{ form.password }}
+        </div>
+    </div>
+    <div class="control-group">    
+        <div class="controls">
+            <button type="submit" class="btn">sign in</button>
+            <input type="hidden" name="next" value="/" />
+        </div>    
     
+    </div>
     {% if form.non_field_errors %}
     <p>사용자 이름과 비밀번호가 일치하지 않습니다.<p>
     {% endif %} 
 
     
     </form>
+    </div>
 </body>
 </html>
 {% endblock %}
