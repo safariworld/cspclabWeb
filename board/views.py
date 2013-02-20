@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 #template: list.html
 
 def list ( request, page=1 ):
-
+    
     page_title = 'List'
     per_page = 5
     page = int(page)
