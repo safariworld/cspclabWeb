@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 import settings
 import os
 from django.core.servers.basehttp import FileWrapper
+from django.contrib.auth.decorators import login_required
 
 #show list page specified by arguement PAGE.
 #template: list.html
@@ -59,6 +60,7 @@ def handle_uploaded_file(f):
     destination.close()
 
 @csrf_exempt
+@login_required
 def write( request ):
     page_title = 'Write page'
     categories = Categories.objects.all()
@@ -68,9 +70,9 @@ def write( request ):
         if form.is_valid():
             handle_uploaded_file(request.FILES['attachedFile'])
             post = form.save(commit=False)
+            post.user = request.user
             post.save()
             tpl = loader.get_template('main.html')
-            return HttpResponse( tpl )
     else:
         form = WriteForm()
         ctx = Context({
