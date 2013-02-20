@@ -15,7 +15,7 @@ from django.core.servers.basehttp import FileWrapper
 #template: list.html
 
 def list ( request, page=1 ):
-
+    
     page_title = 'List'
     per_page = 5
     page = int(page)
