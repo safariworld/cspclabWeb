@@ -8,6 +8,7 @@ from django.template import Context
 from django.shortcuts import render_to_response
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from cspclabWeb.forms import *
 
 def aboutUs(request):
@@ -28,6 +29,8 @@ def register(request):
                     password=form.cleaned_data['password1'],
                     email=form.cleaned_data['email']
             )
+            group = Group.objects.get(name='guest')
+            group.user_set.add(user)
             return HttpResponseRedirect('/plain/accounts/register_success/')
     else:
         form = RegistrationForm()
