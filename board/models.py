@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
 
 # Create your models here.
 
@@ -23,6 +24,7 @@ class WritingEntries( models.Model ):
         return self.title
 
 
+
 class CommentsModel( models.Model ):
     content = models.TextField(max_length = 2000, null = False)
     createdDate = models.DateTimeField(auto_now = True)
@@ -30,3 +32,5 @@ class CommentsModel( models.Model ):
 
     def __unicode__(self):
         return self.content
+
+

@@ -12,31 +12,36 @@ import os
 from django.core.servers.basehttp import FileWrapper
 from django.contrib.auth.decorators import login_required
 
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+
 #show list page specified by arguement PAGE.
 #template: list.html
 
-def list ( request, page=1 ):
+def list ( request, board_category, page=1 ):
     
     page_title = 'List'
     per_page = 5
     page = int(page)
     start_pos = (page-1)*per_page
     end_pos = start_pos + per_page
-    entries = WritingEntries.objects.all().order_by('-createdDate')[start_pos:end_pos]
+    category = get_object_or_404(Categories, title = board_category)
+    entries = WritingEntries.objects.filter(category=category).order_by('-createdDate')[start_pos:end_pos]
     numberOfentries = WritingEntries.objects.count()
     numberOfpages = numberOfentries/per_page
     if not numberOfentries%per_page == 0:
         numberOfpages = numberOfpages + 1
 
-    tpl = loader.get_template('list.html')
-    ctx = Context({
+    var = RequestContext(request, {
         'page_title':page_title,
         'entries':entries,
         'current_page':page,
         'num_pages':[ t+1 for t in range(numberOfpages)],
         })
-    
-    return HttpResponse(tpl.render(ctx) )
+    return render_to_response(
+            'list.html',
+            var,
+            )
 
 def read ( request, entry_id = None ):
     page_title = 'Read page'
@@ -62,7 +67,6 @@ def handle_uploaded_file(f):
 @csrf_exempt
 @login_required
 def write( request ):
-    page_title = 'Write page'
     categories = Categories.objects.all()
     tpl = loader.get_template('write.html')
     if request.method == "POST":
@@ -73,10 +77,17 @@ def write( request ):
             post.user = request.user
             post.save()
             tpl = loader.get_template('main.html')
+            ctx = Context({})
+            return HttpResponse( tpl.render(ctx) )
+        else:
+            ctx = Context({
+                'categories':categories,
+                'form':form
+            })
+            return HttpResponse( tpl.render(ctx) )
     else:
         form = WriteForm()
         ctx = Context({
-            'page_title':page_title,
             'categories':categories,
             'form':form
             })

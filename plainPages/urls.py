@@ -7,7 +7,7 @@ import views
 urlpatterns = patterns(
     'plainPages.views',
     (r'accounts/signin/$', login),
-    #    (r'accounts/signup/$', views.register),
+    (r'accounts/signup/$', views.register),
     (r'accounts/register_success/$', direct_to_template,
        { 'template' : 'registration/signup_success.html' }),
     (r'aboutus$', views.aboutUs),
