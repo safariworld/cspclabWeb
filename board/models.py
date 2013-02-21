@@ -17,7 +17,7 @@ class WritingEntries( models.Model ):
     updatedDate = models.DateTimeField(auto_now = True)
     category = models.ForeignKey(Categories)
     comments = models.PositiveSmallIntegerField( default = 0, null = True )
-    attachedFile = models.FileField(upload_to='attachments', null = True) #attach file.
+    attachedFile = models.FileField(upload_to='attachments', null = True, blank=True) #attach file.
     user = models.ForeignKey(User, null=False)
 
     def __unicode__(self):

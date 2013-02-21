@@ -37,6 +37,7 @@ def list ( request, board_category, page=1 ):
         'entries':entries,
         'current_page':page,
         'num_pages':[ t+1 for t in range(numberOfpages)],
+        'category':board_category,
         })
     return render_to_response(
             'list.html',
@@ -66,13 +67,16 @@ def handle_uploaded_file(f):
 
 @csrf_exempt
 @login_required
-def write( request ):
-    categories = Categories.objects.all()
+def write( request, board_category ):
+    initial_data = {}
+    category = get_object_or_404(Categories, title = board_category)
+    initial_data["category"] = category.id
     tpl = loader.get_template('write.html')
     if request.method == "POST":
         form = WriteForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['attachedFile'])
+            if len(request.FILES) != 0:
+                handle_uploaded_file(request.FILES['attachedFile'])
             post = form.save(commit=False)
             post.user = request.user
             post.save()
@@ -81,14 +85,12 @@ def write( request ):
             return HttpResponse( tpl.render(ctx) )
         else:
             ctx = Context({
-                'categories':categories,
                 'form':form
             })
             return HttpResponse( tpl.render(ctx) )
     else:
-        form = WriteForm()
+        form = WriteForm(initial=initial_data)
         ctx = Context({
-            'categories':categories,
             'form':form
             })
         return HttpResponse( tpl.render(ctx) )
