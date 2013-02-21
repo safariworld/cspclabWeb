@@ -27,7 +27,7 @@ def list ( request, board_category, page=1 ):
     end_pos = start_pos + per_page
     category = get_object_or_404(Categories, title = board_category)
     entries = WritingEntries.objects.filter(category=category).order_by('-createdDate')[start_pos:end_pos]
-    numberOfentries = WritingEntries.objects.count()
+    numberOfentries = WritingEntries.objects.filter(category=category).count()
     numberOfpages = numberOfentries/per_page
     if not numberOfentries%per_page == 0:
         numberOfpages = numberOfpages + 1
@@ -82,8 +82,7 @@ def write( request, board_category ):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            var = Context(request,{})
-            return render_to_response(request, var)
+            return redirect(reverse("board-read", kwargs={"entry_id":post.id}))
         else:
             var = RequestContext(request, {
                 'form':form
