@@ -4,8 +4,8 @@ import views
 
 urlpatterns = patterns(
     'board.views',
-    url(r'^$', views.list),
+    url(r'^list/(?P<board_category>[^/]+)/(?P<page>[^/]+)/$', views.list),
     url(r'^read/(?P<entry_id>[0-9]+)/$', views.read),
-    url(r'^write/$', views.write),
+    url(r'^write/(?P<board_category>[^/]+)/$', views.write),
     url(r'^download/attachments/(?P<filename>.*)/$', views.download_file),
 )

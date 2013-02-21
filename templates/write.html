@@ -55,27 +55,33 @@ padding-top:5px;
 <!--<h4></h4>-->
 <script src="/media/ckeditor/ckeditor.js"></script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-     
-   <!--  
      <div class="category">
         {{form.category.label_tag}}
         {{form.category}}
     </div>
-    -->
      <div class="title">
          <label>TITLE</label> 
-        {{form.title}}
+         {{form.title}}
+         {% for error in form.title.errors %}
+         {{error}}
+         {% endfor %}
     </div>
 
     <div class="writeContent">
  
          {{form.content}}
+         {% for error in form.content.errors %}
+             {{error}}
+         {% endfor %}
  </div>
      <span>
         {{form.attachedFile.label_tag}}
      </span>  
      <div>
          {{form.attachedFile}}
+         {% for error in form.attachedFile.errors %}
+             {{error}}
+         {% endfor %}
      </div>
 
 

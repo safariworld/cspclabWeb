@@ -29,7 +29,7 @@
         {% for entry in entries %}
         <tr>
             <td><a href = "/board/read/{{entry.id}}" >{{entry.title}}</a></td>
-            <td>작성자 추후 추가</td>
+            <td> {{entry.user.username}} </td>
             <td> {{entry.updatedDate}} </td>
         </tr>
         {% endfor %}
@@ -44,11 +44,12 @@
         <li><a href="">Next</a></li>
     </ul>
 </div>
+
 <div id="writeBtn" class="btn writebtn">글쓰기</div>
 <script type="text/javascript">
     (function() {
      $("#writeBtn").click(function() {
-         window.location.href = window.location.href.split("board")[0]+"board/write";          
+         window.location.href = window.location.href.split("board")[0]+"board/write/{{category}}";          
          });
     })()
 
