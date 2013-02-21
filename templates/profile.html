@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>profile<p>
+<p>profile<p><br>
+<p>이름 : {{ user.username }} <p>
+<p>등급 : {{ user.groups.all.0 }}<p>
+<p>이메일 : {{ user.email }} <p>
 
 {% endblock %}
