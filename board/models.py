@@ -23,14 +23,11 @@ class WritingEntries( models.Model ):
     def __unicode__(self):
         return self.title
 
-
-
 class CommentsModel( models.Model ):
     content = models.TextField(max_length = 2000, null = False)
     createdDate = models.DateTimeField(auto_now = True)
     writingEntry = models.ForeignKey( WritingEntries )
+    user = models.ForeignKey(User, null=False)
 
     def __unicode__(self):
         return self.content
-
-

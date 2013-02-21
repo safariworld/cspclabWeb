@@ -14,7 +14,7 @@
 -------------------------<br>
 <div>
     {% include 'comments.html' %}
-    <form action="" method="post">{% csrf_token %}
+    <form action="/board/add_comment/" method="post">{% csrf_token %}
     {% for field in form %}
     <dl>
         <dt>
@@ -29,6 +29,7 @@
         </dd>
     </dl>
     {% endfor %}
+    <input type="hidden" name="entry_id" value="{{current_entry.id}}" />
     <input type="submit" value="add comment"/>
     </form>
 </div>

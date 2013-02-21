@@ -14,4 +14,5 @@ class WriteForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = CommentsModel
+        exclude = ('user',)
         fields = ('content',)
