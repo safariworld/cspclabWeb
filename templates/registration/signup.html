@@ -1,7 +1,37 @@
 {% extends "base.html" %}
+{% block pagecss %}
+
+
+.signpage  {
+    display:table-cell;
+    vertical-align:middle;
+    height:500px;
+}
+
+.signpage form{
+}
+
+{% endblock %}
 {% block content %}
-    <form method = "post" action = "."
-        {{ form.as_p }}
-        <input type = "submit" value ="sign up" />
+
+<div class="signpage">
+<form method = "post" action = "." class="form-horizontal">
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+    <div class="control-group">    
+        <label for="id_username" class="control-label">{{field.name}} :</label>
+        <div class="controls">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor  %}
+    <div class="control-group">    
+        <div class="controls">
+            <button type="submit" class="btn">sign up</button>
+        </div>     
+    </div>
     </form>
+    </div>
 {% endblock %}
