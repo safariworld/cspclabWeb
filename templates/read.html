@@ -1,30 +1,113 @@
 {% extends "base.html" %}
+
+{% block pagecss %}
+.textTitle {
+
+    position:relative;
+   height:40px; 
+border-bottom:3px solid black;
+ }
+    
+ .textTitle h3{
+    position:relative;
+    float:left;
+    left:10px;
+    bottom:10px;
+ }
+
+
+ .textTitle .date {
+    float:right;
+    vertical-align:middle;
+    text-align:bottom;
+    margin-right:20px;
+ }
+ 
+ .textTitle .category {
+ 
+ float:right;
+ margin-right:20px;
+ }
+
+ .textContent {
+    margin-top:20px;
+    min-height:300px;  
+ 
+ 
+    }
+
+.comments {
+    border-top:2px solid black;
+}
+
+.commentsGroup ul{
+    list-style:none;
+}
+
+.commentsGroup li {
+    padding-top:10px;
+    border-bottom:1px solid #999999;
+}
+
+
+.commentsGroup .commentUser {
+    font-weight:bold;
+}
+
+.commentsGroup .commentContent {
+    margin-left:10px;
+}
+
+
+.comments textarea {
+    width:100%;
+    height:40px;
+}
+
+.change {
+    float:right;
+    margin-top:-30px;
+
+}
+
+{% endblock %}
 {% block content %}
 <div>
-    <h3> <a href = "/board/read/{{current_entry.id}}">{{current_entry.title}}</a></h3>
-    <ul>
-    <li> category: {{current_entry.category.title}} </li>
-    <li> {{current_entry.createdDate}} </li>
-    </ul>
-
-    <div> 내용:<br> {{current_entry.content}} </div>
-    <br>
+    
+    <div class="textTitle">
+        <h3> {{current_entry.title}}</h3>
+        <div class="date" > {{current_entry.createdDate}} </div>
+        <div class="category"> {{current_entry.category.title}} </div>
+    </div>
+    <div id="hiddenContent" style="display:none">{{current_entry.content}}</div>
+    <div id="textContent" class="textContent">
+    
+    
+    </div>
+    
+    <script type="text/javascript">    
+       document.getElementById("textContent").innerHTML=htmlDecode(document.getElementById("hiddenContent").innerHTML);
+   </script>
+   
+   <br>
+   <!--
     <div> 첨부파일:<br> <a href="/board/download/{{current_entry.attachedFile}}">{{current_entry.attachedFile}}</a></div>
+    -->
 </div>
 {% if user == current_entry.user or user.is_superuser %}
 <a href="{% url board-edit current_entry.id %}">수정</a>
 <a href="{% url board-delete current_entry.id %}">삭제</a>
 {% endif %}
--------------------------<br>
-<div>
+
+<div class="comments">
     {% include 'comments.html' %}
     <form action="/board/add_comment/" method="post">{% csrf_token %}
     {% for field in form %}
     <dl>
         <dt>
-        <label>
+       <!-- <label>
             {{ field.label_tag }}
-        </label>
+        </label> -->
         <dd>
         {{ field }}
         {% for error in field.errors %}
@@ -34,7 +117,9 @@
     </dl>
     {% endfor %}
     <input type="hidden" name="entry_id" value="{{current_entry.id}}" />
-    <input type="submit" value="add comment"/>
+    <input type="submit" value="add comment" class="btn"/>
     </form>
 </div>
+
+
 {% endblock %}
