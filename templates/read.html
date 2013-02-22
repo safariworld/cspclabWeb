@@ -13,6 +13,7 @@
 </div>
 {% if user == current_entry.user or user.is_superuser %}
 <a href="{% url board-edit current_entry.id %}">수정</a>
+<a href="{% url board-delete current_entry.id %}">삭제</a>
 {% endif %}
 -------------------------<br>
 <div>
