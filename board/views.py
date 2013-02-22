@@ -102,6 +102,22 @@ def write( request, board_category = None, entry_id = None ):
             })
         return render_to_response('write.html', var )
 
+def delete(request, entry_id):
+    post = get_object_or_404(WritingEntries, id=entry_id)
+    if not request.user.is_superuser and request.user != post.user:
+        return HttpResponseForbidden("not allowed")
+    
+    if request.method == "POST":
+        CommentsModel.objects.filter(writingEntry=entry_id).delete()
+        post.delete()
+        return redirect(reverse("board-list", kwargs={"board_category":post.category, "page":1}))
+
+    var = RequestContext(request, {
+        "post":post,
+    })
+    return render_to_response("delete.html", var)
+
+
 def download_file(request, filename ):
     filepath = settings.DOWNLOAD_DIR + filename
     wrapper = FileWrapper( file(filepath) )
