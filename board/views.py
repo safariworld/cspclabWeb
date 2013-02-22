@@ -69,11 +69,12 @@ def handle_uploaded_file(f):
 
 @csrf_exempt
 @login_required
-def write( request, board_category ):
+def write( request, board_category = None, entry_id = None ):
     initial_data = {}
-    category = get_object_or_404(Categories, title = board_category)
-    initial_data["category"] = category.id
-    tpl = loader.get_template('write.html')
+    if board_category != None:
+        category = get_object_or_404(Categories, title = board_category)
+        initial_data["category"] = category.id
+
     if request.method == "POST":
         form = WriteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -89,7 +90,13 @@ def write( request, board_category ):
             })
             return render_to_response('write.html', var )
     else:
-        form = WriteForm(initial=initial_data)
+        if entry_id == None:
+            form = WriteForm(initial=initial_data)
+        else:
+            post = get_object_or_404(WritingEntries, id=entry_id)
+            if request.user != post.user and not request.user.is_superuser :
+                return HttpResponseForbidden("not allowed")
+            form = WriteForm(data=request.POST or None, instance = post)
         var = RequestContext(request, {
             'form':form
             })

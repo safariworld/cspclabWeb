@@ -1,7 +1,7 @@
 {% if comments|length %}
 <ul>
 {% for comment in comments %}
-    <li>{{comment.name}}
+    <li>{{comment.user}}
     <p>{{comment.content}}</p></li>
 {% endfor %}
 </ul>
