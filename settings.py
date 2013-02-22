@@ -124,6 +124,7 @@ INSTALLED_APPS = (
 
     'cspclabWeb.plainPages',
     'cspclabWeb.board',
+    'cspclabWeb.home',
 #added by shpark
     'cspclabWeb.itemPage',
     # Uncomment the next line to enable the admin:
@@ -131,10 +132,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
-
-    'home',
-    'board',
-    'plainPages',
 )
 
 # A sample logging configuration. The only tangible logging

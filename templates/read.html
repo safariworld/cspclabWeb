@@ -11,10 +11,13 @@
     <br>
     <div> 첨부파일:<br> <a href="/board/download/{{current_entry.attachedFile}}">{{current_entry.attachedFile}}</a></div>
 </div>
+{% if user == current_entry.user or user.is_superuser %}
+<a href="{% url board-edit current_entry.id %}">수정</a>
+{% endif %}
 -------------------------<br>
 <div>
     {% include 'comments.html' %}
-    <form action="" method="post">{% csrf_token %}
+    <form action="/board/add_comment/" method="post">{% csrf_token %}
     {% for field in form %}
     <dl>
         <dt>
@@ -29,6 +32,7 @@
         </dd>
     </dl>
     {% endfor %}
+    <input type="hidden" name="entry_id" value="{{current_entry.id}}" />
     <input type="submit" value="add comment"/>
     </form>
 </div>
