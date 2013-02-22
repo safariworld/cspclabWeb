@@ -1,10 +1,14 @@
 {% if comments|length %}
-<ul>
-{% for comment in comments %}
-    <li>{{comment.user}}
-    <p>{{comment.content}}</p></li>
-{% endfor %}
-</ul>
+<div class="commentsGroup">
+    <ul>
+        {% for comment in comments %}
+        <li>
+    <div class="commentUser">{{comment.user}}</div>
+    <div class="commentContent">{{comment.content}}</div>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
 {% else %}
-There is no comment.</br>
+<!--There is no comment.</br>-->
 {% endif %}
