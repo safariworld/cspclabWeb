@@ -95,6 +95,8 @@ border-bottom:3px solid black;
     -->
 </div>
 {% if user == current_entry.user or user.is_superuser %}
+<a href="{% url board-edit current_entry.id %}">수정</a>
+<a href="{% url board-delete current_entry.id %}">삭제</a>
 {% endif %}
 
 <div class="comments">
@@ -119,6 +121,5 @@ border-bottom:3px solid black;
     </form>
 </div>
 
-<a class="change" href="{% url board-edit current_entry.id %}">수정</a>
 
 {% endblock %}
